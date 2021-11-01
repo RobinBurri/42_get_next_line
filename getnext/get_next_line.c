@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:17 by rburri            #+#    #+#             */
-/*   Updated: 2021/10/29 15:25:33 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/01 18:33:03 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,59 @@
 #include <fcntl.h>
 
 #define BUFFER_SIZE 5
+
+int        ft_check_newline(char *stack)
+{
+    int            i;
+
+    i = 0;
+    while (stack[i])
+    {
+        if (stack[i] == '\n')
+            return (i);
+        i++;
+    }
+    return (-1);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*newstr;
+	size_t	max_len;
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (len > ft_strlen(s) + 1)
+		max_len = ft_strlen(s) + 1;
+	else
+		max_len = len;
+	newstr = (char *)malloc(sizeof(char) * (max_len + 1));
+	if (!newstr)
+		return (NULL);
+	while (start < ft_strlen(s) && i < max_len)
+	{
+		newstr[i] = s[start];
+		i++;
+		start++;
+	}
+	newstr[i] = '\0';
+	return (newstr);
+}
+
+char	*ft_strrchr(const char *s, int c)
+{
+	size_t	i;
+
+	i = ft_strlen(s);
+	while (i > 0 && s[i] != (char)c)
+		i--;
+	if (s[i] == (char)c)
+		return ((char *)(s + i + 1));
+	return (0);
+}
+
 
 size_t	ft_strlen(const char *s)
 {
@@ -25,95 +78,73 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(const char *s)
 {
-	char *s2;
-	size_t size;
-	int i;
-
-	size = ft_strlen(s1);
-	s2 = (char *)malloc(sizeof(char) * size + 1);
-	if (!s2)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		s2[i] = s1[i];
-		i++;
-	}
-	s2[i] = '\0';
-	return (s2);
-}
-
-char	*ft_empty_str(int a)
-{	
-	char	*s;
+	char	*ret;
 	int		i;
-	s = (char *)malloc(a);
-	i = 0;
-	while (i < a)
-		s[i++] = '\0';
-	return (s);
-}
-
-void	ft_strlcat(char *dest, char *src, int l)
-{
-	int	x;
-	int	i;
+	int		len;
 
 	i = 0;
-	x = ft_strlen(dest);
-	while (src[i] && src[i] != '\03' && i < l)
-		dest[x++] = src[i++];
-}
-
-int	ft_check_eof_eol(char *s, int *eof, int *eol)
-{
-	int i;
-
-	i = 0;
+	len = ft_strlen(s);
+	ret = (char *)malloc((len + 1) * sizeof(char));
+	if (ret == NULL)
+		return (NULL);
 	while (s[i])
 	{
-		if (s[i] == EOF)
-		{
-			*eof = 0;
-			return (i + 1);
-		}
-		else if (s[i] == '\n')
-		{
-			*eol = 0;
-			return (i + 1);
-		}
+		ret[i] = s[i];
 		i++;
-	}	
-	return (i + 1);
+	}
+	ret[i] = '\0';
+	return (ret);
 }
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char *new_str;
+	int len;
+	int i;
+	int j;
+
+	len = (ft_strlen(s1) + ft_strlen(s2) + 1);
+	i = 0;
+	new_str = (char *) malloc(len *sizeof(char));
+	if (new_str == NULL)	
+		return (NULL);
+	while (s1[i])
+	{
+		new_str[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+		new_str[i++] =s2[j++];
+	new_str[i] = '\0';
+	return (new_str);
+}
+
+
 /******************************************************/
 char	*get_next_line(int fd)
 {	
-	char buf[BUFFER_SIZE];
-	char *s;
+	char buf[BUFFER_SIZE + 1];
+	static char *stack = "";
+	char *line;
 	int ret;
-	int eof;
-	int eol;
-	int len;
+	int check;
 
-	eof = 1;
-	eol = 1;
-	s = ft_empty_str(10);
-	while (eof == 1 && eol == 1)
+	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
-		ret = 0;
-		ret = read(fd, buf, BUFFER_SIZE);
-		if (!ret || ret == 0)
-			return (NULL);
-		len = ft_check_eof_eol(buf, &eof, &eol);
-		ft_strlcat(s, buf, len);
+	 	buf[ret] ='\0';
+		stack = ft_strjoin(stack, buf);
+		check = ft_check_newline(stack);
+		if (check != -1)
+		{
+			line = ft_substr(stack, 0, check + 1);
+			stack = ft_strrchr(stack, 10);
+			return (line);
+		}
 	}
-	if (len < ret)
-	{
-		
-	}	
+	return (stack);
 		
 }
 
@@ -132,13 +163,14 @@ int main()
 			printf("Open Error");
 			return (1);
 		}
-	while (end == 0)
-	{
+	
+		s = get_next_line(fd);
+		s = get_next_line(fd);
+		s = get_next_line(fd);
+		s = get_next_line(fd);
 		s = get_next_line(fd);
 		printf("%s", s);
-		if (s == NULL)
-			end = 1;
-	}
+
 	free(s);
 	close_ret = close(fd);
 	if (close_ret == -1)

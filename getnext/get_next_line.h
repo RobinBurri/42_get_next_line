@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:26 by rburri            #+#    #+#             */
-/*   Updated: 2021/10/29 15:06:03 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/01 17:53:06 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+# define OPEN_MAX 10240
 
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *s1);
