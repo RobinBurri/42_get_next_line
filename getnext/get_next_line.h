@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:26 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/01 17:53:06 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:15:49 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define OPEN_MAX 10240
+# define BUFFER_SIZE 42
 
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *s1);
+int		ft_check_newline(char *stack);
 size_t	ft_strlen(const char *s);
-char	*ft_empty_str(int a);
-void	ft_strlcat(char *dest, char *src, int l);
-int		ft_check_eof_eol(char *s, int *eof, int *eol);
+char	*ft_strjoin(char *s1, char const *s2);
+char	*ft_strchr(const char *s, int c);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
