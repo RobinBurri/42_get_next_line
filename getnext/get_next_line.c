@@ -6,11 +6,35 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:17 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/02 16:24:57 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:32:33 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i])
+		i++;
+	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
+}
+
+static int	ft_check_newline(char *stack)
+{
+	int	i;
+
+	i = 0;
+	while (stack[i])
+	{
+		if (stack[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
 char	*get_next_line(int fd)
 {	

@@ -6,25 +6,11 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:59:53 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/02 15:42:55 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:32:18 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-int        ft_check_newline(char *stack)
-{
-    int            i;
-
-    i = 0;
-    while (stack[i])
-    {
-        if (stack[i] == '\n')
-            return (i);
-        i++;
-    }
-    return (-1);
-}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -52,16 +38,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (newstr);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i])
-		i++;
-	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
-}
-
 char	*ft_strchr(const char *s, int c)
 {
 	while (*s && *s != (char)c)
@@ -72,11 +48,10 @@ char	*ft_strchr(const char *s, int c)
 		return (0);
 }
 
-
 size_t	ft_strlen(const char *s)
 {
-	size_t len;
-	
+	size_t	len;
+
 	len = 0;
 	while (s[len])
 		len++;
@@ -112,7 +87,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 
 	len = (ft_strlen(s1) + ft_strlen(s2) + 1);
 	i = 0;
-	new_str = (char *)malloc(len *sizeof(char));
+	new_str = (char *)malloc(len * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
 	while (s1[i])
