@@ -55,16 +55,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (newstr);
 }
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
-
-	i = ft_strlen(s);
-	while (i > 0 && s[i] != (char)c)
-		i--;
-	if (s[i] == (char)c)
-		return ((char *)(s + i + 1));
-	return (0);
+	while (*s && *s != (char)c)
+		s++;
+	if (*s == (char)c)
+		return ((char *)s + 1);
+	else
+		return (0);
 }
 
 
@@ -98,7 +96,7 @@ char	*ft_strdup(const char *s)
 	return (ret);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char *new_str;
 	int len;
@@ -129,19 +127,24 @@ char	*get_next_line(int fd)
 	char buf[BUFFER_SIZE + 1];
 	static char *stack = "";
 	char *line;
+	int i;
+
 	int ret;
 	int check;
-
 	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 	 	buf[ret] ='\0';
 		stack = ft_strjoin(stack, buf);
-		check = ft_check_newline(stack);
-		if (check != -1)
+		while (ft_check_newline(stack) != -1)
 		{
-			line = ft_substr(stack, 0, check + 1);
-			stack = ft_strrchr(stack, 10);
-			return (line);
+			i = 1;
+			check = ft_check_newline(stack);
+			if (check != -1)
+			{
+				line = ft_substr(stack, 0, check + 1);
+				stack = ft_strchr(stack, 10);
+				return (line);
+			}
 		}
 	}
 	return (stack);
@@ -165,13 +168,20 @@ int main()
 		}
 	
 		s = get_next_line(fd);
-		s = get_next_line(fd);
-		s = get_next_line(fd);
-		s = get_next_line(fd);
+		printf("%s", s);
+		free(s);
 		s = get_next_line(fd);
 		printf("%s", s);
-
-	free(s);
+		free(s);
+		s = get_next_line(fd);
+		printf("%s", s);
+		free(s);
+		s = get_next_line(fd);
+		printf("%s", s);
+		free(s);
+		s = get_next_line(fd);
+		printf("%s", s);
+		free(s);
 	close_ret = close(fd);
 	if (close_ret == -1)
 	{

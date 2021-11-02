@@ -1,7 +1,6 @@
-To turn in bonuses to your project,
-you must include a rule bonust o your Makefile,
-which will add all the various headers, librairies or functions that are forbidden on
-the main part of the project.
-Bonuses must be in a different file_bonus.{c/h}.
-Mandatory and bonus part evaluation is done separately.
+ligne 1.
+ligne 2.
+ligne 3.
+ligne 4.
+La fin.
 
