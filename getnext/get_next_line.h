@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:26 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/02 17:21:25 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/02 17:41:38 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 11142
 
 char	*get_next_line(int fd);
 char	*ft_strdup(char *s1);

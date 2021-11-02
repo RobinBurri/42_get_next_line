@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:17 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/02 17:27:05 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/02 18:07:06 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ static int	ft_check_newline(char *stack)
 
 static char	*ft_send_line(char *stack, char **tmp)
 {
-	char	*line;
-	int		check;
+	static int	i = 0;
+	char		*line;
+	int			check;
 
 	while (ft_check_newline(stack) != -1)
 	{
@@ -41,7 +42,16 @@ static char	*ft_send_line(char *stack, char **tmp)
 			return (line);
 		}
 	}
-	return (NULL);
+	if (i == 1)
+	{
+		free(stack);
+		return (NULL);
+	}
+	else
+	{
+		i = 1;
+		return (stack);
+	}
 }
 
 char	*get_next_line(int fd)
@@ -49,7 +59,7 @@ char	*get_next_line(int fd)
 	static char	*stack;
 	static char	*tmp;
 	char		buf[BUFFER_SIZE + 1];
-	static int	ints[3] = {0};
+	static int	ints[2] = {0};
 
 	if (ints[0] == 0)
 	{
@@ -58,7 +68,8 @@ char	*get_next_line(int fd)
 	}
 	else
 		stack = ft_strdup(tmp);
-	while ((ints[1] = read(fd, buf, BUFFER_SIZE)) > 0)
+	ints[1] = read(fd, buf, BUFFER_SIZE);
+	while (ints[1] > 0)
 	{
 		buf[ints[1]] = '\0';
 		stack = ft_strjoin(stack, buf);
@@ -67,14 +78,5 @@ char	*get_next_line(int fd)
 	}
 	while (ft_check_newline(stack) != -1)
 		return (ft_send_line(stack, &tmp));
-	if (ints[2] == 1)
-	{
-		free(stack);
-		return (NULL);
-	}
-	else
-	{
-		ints[2] = 1;
-		return (stack);
-	}
+	return (ft_send_line(stack, &tmp));
 }
