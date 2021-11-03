@@ -19,9 +19,7 @@ int	main(void)
 	int fd;
 	int close_ret;
 	char *s = "";
-	int end;
 
-	end = 0;
 	fd = open("text.txt", O_RDONLY);
 	if (fd == -1 || !fd)
 		{
