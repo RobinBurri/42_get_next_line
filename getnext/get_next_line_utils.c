@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:59:53 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/02 17:21:20 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/03 18:47:18 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ char	*ft_strdup(char *s)
 	char	*ret;
 	int		i;
 	int		len;
-
+	
+	if (!s)
+		return (NULL);
 	i = 0;
 	len = ft_strlen(s);
 	ret = (char *)malloc((len + 1) * sizeof(char));
