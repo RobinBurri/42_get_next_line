@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:39:24 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/02 18:10:57 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/03 16:27:21 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,7 @@ int	main(void)
 		printf("Close Error\n");
 		return (1);
 	}
+	// s = get_next_line(1);
+	// printf("%s", s);
+	// free(s);
 }

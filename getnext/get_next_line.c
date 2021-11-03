@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:17 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/02 18:07:06 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/03 16:12:07 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,18 @@ static char	*ft_send_line(char *stack, char **tmp)
 	static int	i = 0;
 	char		*line;
 	int			check;
-	int 		len;
+	int			len;
 
-	while (ft_check_newline(stack) != -1)
+	check = ft_check_newline(stack);
+	if (check != -1)
 	{
-		check = ft_check_newline(stack);
-		if (check != -1)
-		{
-			len = 0;
-			line = ft_substr(stack, 0, check + 1);
-			len = (ft_strlen(stack) - ft_strlen(line));
-			free(*tmp);
-			*tmp = ft_substr(stack, check + 1, len);
-			free(stack);
-			return (line);
-		}
+		len = 0;
+		line = ft_substr(stack, 0, check + 1);
+		len = (ft_strlen(stack) - ft_strlen(line));
+		free(*tmp);
+		*tmp = ft_substr(stack, check + 1, len);
+		free(stack);
+		return (line);
 	}
 	if (i == 1)
 	{
@@ -53,11 +50,8 @@ static char	*ft_send_line(char *stack, char **tmp)
 		free(stack);
 		return (NULL);
 	}
-	else
-	{
-		i = 1;
-		return (stack);
-	}
+	i = 1;
+	return (stack);
 }
 
 char	*get_next_line(int fd)
@@ -65,17 +59,12 @@ char	*get_next_line(int fd)
 	static char	*stack;
 	static char	*tmp;
 	char		buf[BUFFER_SIZE + 1];
-	static int	ints[2] = {1,1};
+	static int	ints[2] = {1, 1};
 
-	if (ints[0] == 1)
-	{
+	if (ints[0]-- == 1)
 		stack = ft_strdup("");
-		ints[0] = 0;
-	}
 	else
-	{
 		stack = ft_strdup(tmp);
-	}
 	while (ints[1] > 0)
 	{
 		ints[1] = read(fd, buf, BUFFER_SIZE);
