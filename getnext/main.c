@@ -20,7 +20,7 @@ int	main(void)
 	int close_ret;
 	char *s = "";
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("alt_ln.txt", O_RDONLY);
 	if (fd == -1 || !fd)
 		{
 			printf("Open Error\n");
