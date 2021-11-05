@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len, int f) 
 {
 	char	*newstr;
 	size_t	max_len;
@@ -35,6 +35,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		start++;
 	}
 	newstr[i] = '\0';
+	if (f == 1)
+		free(s);
 	return (newstr);
 }
 
@@ -58,7 +60,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
 }
 
-char	*ft_strdup(char *s)
+char	*ft_strdup(char *s, int f)
 {
 	char	*ret;
 	int		i;
@@ -77,6 +79,8 @@ char	*ft_strdup(char *s)
 		i++;
 	}
 	ret[i] = '\0';
+	if (f == 1)
+		free(s);
 	return (ret);
 }
 

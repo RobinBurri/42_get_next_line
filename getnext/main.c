@@ -42,15 +42,36 @@ int		main(void)
 	fda = open("txt_files/t_empty.txt", O_RDONLY);
 	test(fda);
 
+	printf(MAIN_1("=== 5 nl ===\n"));
+	int	fdf;
+	fdf = open("txt_files/5nl.txt", O_RDONLY);
+	test(fdf);
+
 	printf(MAIN_1("=== \\n file ===\n"));
 	int	fdb;
 	fdb = open("txt_files/t_n.txt", O_RDONLY);
 	test(fdb);
 
+	printf(MAIN_1("=== Alternate line and nl ===\n"));
+	int	fde;
+	fde = open("txt_files/alt_ln.txt", O_RDONLY);
+	test(fde);
+
+
+	printf(MAIN_1("=== BIG LINE NO NL ===\n"));
+	int	fdg;
+	fdg = open("txt_files/bl_no.txt", O_RDONLY);
+	test(fdg);
+
+	printf(MAIN_1("=== BIG LINE WITH NL ===\n"));
+	int	fdh;
+	fdh = open("txt_files/bl_wh.txt", O_RDONLY);
+	test(fdh);
+
 	printf(MAIN_1("=== Le Petit Prince ===\n"));
 	int	fdc;
 	fdc = open("txt_files/t_ptiprinc.txt", O_RDONLY);
 	test(fdc);
-
+	
 	printf(MAIN("=== • Program ended • ===\n\n"));
 }

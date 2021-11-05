@@ -28,77 +28,75 @@ static int	ft_check_newline(char *str)
 	return (-1);
 }
 
-static char	*ft_send_line(char *str, char **tmp)
+static char	*ft_send_line(char **str)
 {
 	char		*line;
 	int			check;
 	int			len;
 
-	check = ft_check_newline(str);
+	check = ft_check_newline(*str);
 	len = 0;
-	line = ft_substr(str, 0, check + 1);
-	len = (ft_strlen(str) - ft_strlen(line));
-	free(*tmp);
-	*tmp = ft_substr(str, check + 1, len);
-	free(str);
+	line = ft_substr(*str, 0, check + 1, 0);
+	len = (ft_strlen(*str) - ft_strlen(line));
+	*str = ft_substr(*str, check + 1, len, 1);
 	return (line);
 }
 
-static char	*ft_send_last_line(char *str, char **tmp, int ints[], int b)
+static char	*ft_send_last_line(char *str, int ints[], int f)
 {
 	static int	i = 0;
 
-	if (i == 1 || b == 0)
+	if (i == 1 || f == 0)
 	{
 		ints[0] = 1;
 		ints[1] = 1;
 		ints[2] = 1; 
-		*tmp = "";
-		if (b != 0)
-			free(*tmp);
-		free(str);
+		str = ft_strdup("", 0);
+		if (f != 0)
+			free(str);
 		return (NULL);
 	}
 	i = 1;
 	return (str);
 }
 
-static char	*ft_str_loader(char **tmp, char **str, int ints[])
+static char	*ft_str_loader(char **str, int ints[])
 {
 	if (ints[0] == 1)
 	{
-		*str = ft_strdup("");
+		*str = ft_strdup("", 0);
 		ints[0] = 0;
 	}
 	else
-		*str = ft_strdup(*tmp);
+		{
+		*str = ft_strdup(*str, 1);
+		}
 	return (*str);
 }
 
 char	*get_next_line(int fd)
 {	
-	static char	*tmp;
-	char		*str;
+	static char	*str;
 	char		buf[BUFFER_SIZE + 1];
 	static int	ints[] = {1, 1, 1};
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	str = ft_str_loader(&tmp, &str, ints);
+	str = ft_str_loader(&str, ints);
 	while (ints[1] > 0)
 	{
 		ints[1] = read(fd, buf, BUFFER_SIZE);
 		if (ints[1] == -1 || (ints[2]++ == 1 && ints[1] == 0)
 			|| (ints[1] == 0 && (ft_strcmp(str, "") == 0)))
 		{
-			return (ft_send_last_line(str, &tmp, ints, 0));
+			return (ft_send_last_line(str, ints, 0));
 		}
 		buf[ints[1]] = '\0';
 		str = ft_strjoin(str, buf);
 		if (ft_check_newline(str) != -1)
-			return (ft_send_line(str, &tmp));
+			return (ft_send_line(&str));
 	}
 	if (ft_check_newline(str) != -1)
-		return (ft_send_line(str, &tmp));
-	return (ft_send_last_line(str, &tmp, ints, 1));
+		return (ft_send_line(&str));
+	return (ft_send_last_line(str, ints, 1));
 }
