@@ -44,13 +44,18 @@ static char	*ft_send_line(char *str, char **tmp)
 	return (line);
 }
 
-static char	*ft_send_last_line(char *str, char **tmp)
+static char	*ft_send_last_line(char *str, char **tmp, int ints[], int b)
 {
 	static int	i = 0;
 
-	if (i == 1)
+	if (i == 1 || b == 0)
 	{
-		free(*tmp);
+		ints[0] = 1;
+		ints[1] = 1;
+		ints[2] = 1; 
+		*tmp = "";
+		if (b != 0)
+			free(*tmp);
 		free(str);
 		return (NULL);
 	}
@@ -86,8 +91,7 @@ char	*get_next_line(int fd)
 		if (ints[1] == -1 || (ints[2]++ == 1 && ints[1] == 0)
 			|| (ints[1] == 0 && (ft_strcmp(str, "") == 0)))
 		{
-			free(str);
-			return (NULL);
+			return (ft_send_last_line(str, &tmp, ints, 0));
 		}
 		buf[ints[1]] = '\0';
 		str = ft_strjoin(str, buf);
@@ -96,5 +100,5 @@ char	*get_next_line(int fd)
 	}
 	if (ft_check_newline(str) != -1)
 		return (ft_send_line(str, &tmp));
-	return (ft_send_last_line(str, &tmp));
+	return (ft_send_last_line(str, &tmp, ints, 1));
 }
