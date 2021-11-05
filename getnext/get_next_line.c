@@ -6,85 +6,95 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:17 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/03 19:31:12 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/05 10:10:08 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	ft_check_newline(char *stack)
+static int	ft_check_newline(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (!stack)
+	if (!str)
 		return (-1);
-	while (stack[i])
+	while (str[i])
 	{
-		if (stack[i] == '\n')
+		if (str[i] == '\n')
 			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-static char	*ft_send_line(char *stack, char **tmp)
+static char	*ft_send_line(char *str, char **tmp)
 {
 	char		*line;
 	int			check;
 	int			len;
 
-	check = ft_check_newline(stack);
+	check = ft_check_newline(str);
 	len = 0;
-	line = ft_substr(stack, 0, check + 1);
-	len = (ft_strlen(stack) - ft_strlen(line));
+	line = ft_substr(str, 0, check + 1);
+	len = (ft_strlen(str) - ft_strlen(line));
 	free(*tmp);
-	*tmp = ft_substr(stack, check + 1, len);
-	free(stack);
+	*tmp = ft_substr(str, check + 1, len);
+	free(str);
 	return (line);
 }
 
-static char	*ft_send_last_line(char *stack, char **tmp)
+static char	*ft_send_last_line(char *str, char **tmp)
 {
 	static int	i = 0;
+
 	if (i == 1)
 	{
 		free(*tmp);
-		free(stack);
+		free(str);
 		return (NULL);
 	}
 	i = 1;
-	return (stack);
+	return (str);
+}
+
+static char	*ft_str_loader(char **tmp, char **str, int ints[])
+{
+	if (ints[0] == 1)
+	{
+		*str = ft_strdup("");
+		ints[0] = 0;
+	}
+	else
+		*str = ft_strdup(*tmp);
+	return (*str);
 }
 
 char	*get_next_line(int fd)
 {	
-	char	*stack;
 	static char	*tmp;
+	char		*str;
 	char		buf[BUFFER_SIZE + 1];
-	static int	ints[3] = {1, 1, 1};
+	static int	ints[] = {1, 1, 1};
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (ints[0]-- == 1)
-		stack = ft_strdup("");
-	else
-		stack = ft_strdup(tmp);
+	str = ft_str_loader(&tmp, &str, ints);
 	while (ints[1] > 0)
 	{
 		ints[1] = read(fd, buf, BUFFER_SIZE);
-		if(ints[1]  == -1 || (ints[1] == 0 && ints[2] == 1)
-			|| (ints[1] == 0 && (ft_strcmp(stack, "") == 0)))
+		if (ints[1] == -1 || (ints[2]++ == 1 && ints[1] == 0)
+			|| (ints[1] == 0 && (ft_strcmp(str, "") == 0)))
 		{
-			free(stack);
+			free(str);
 			return (NULL);
 		}
-		ints[2] = 2;
 		buf[ints[1]] = '\0';
-		stack = ft_strjoin(stack, buf);
-		if (ft_check_newline(stack) != -1)
-			return (ft_send_line(stack, &tmp));
+		str = ft_strjoin(str, buf);
+		if (ft_check_newline(str) != -1)
+			return (ft_send_line(str, &tmp));
 	}
-	if (ft_check_newline(stack) != -1)
-		return (ft_send_line(stack, &tmp));
-	return (ft_send_last_line(stack, &tmp));
+	if (ft_check_newline(str) != -1)
+		return (ft_send_line(str, &tmp));
+	return (ft_send_last_line(str, &tmp));
 }

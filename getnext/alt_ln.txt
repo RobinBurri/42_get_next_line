@@ -1,9 +1,7 @@
-qwertyuiop[asdfghjkl]
+premiere ligne,
 
-asdfghjklzxcvbnm,
+deuximeme ligne,
 
-gfhdajkfdlasrq456fdsa
+troisieme ligne,
 
-ewqrewqtttrewq
-
-87897987897897897878787987
+quatrieme ligne,
