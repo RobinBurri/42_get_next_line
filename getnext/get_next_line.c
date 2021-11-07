@@ -57,6 +57,7 @@ static char	*ft_send_last_line(char *str, int ints[], int f)
 		ints[0] = 1;
 		ints[1] = 1;
 		ints[2] = 1; 
+		i = 0;
 		return (NULL);
 	}
 	i = 1;

@@ -68,20 +68,20 @@ int		main(void)
 	test(fde);
 
 
-	// printf(MAIN_1("=== BIG LINE NO NL ===\n"));
-	// int	fdg;
-	// fdg = open("txt_files/bl_no.txt", O_RDONLY);
-	// test(fdg);
+	printf(MAIN_1("=== BIG LINE NO NL ===\n"));
+	int	fdg;
+	fdg = open("txt_files/bl_no.txt", O_RDONLY);
+	test(fdg);
 
-	// printf(MAIN_1("=== BIG LINE WITH NL ===\n"));
-	// int	fdh;
-	// fdh = open("txt_files/bl_wh.txt", O_RDONLY);
-	// test(fdh);
+	printf(MAIN_1("=== BIG LINE WITH NL ===\n"));
+	int	fdh;
+	fdh = open("txt_files/bl_wh.txt", O_RDONLY);
+	test(fdh);
 
-	// printf(MAIN_1("=== Le Petit Prince ===\n"));
-	// int	fdc;
-	// fdc = open("txt_files/t_ptiprinc.txt", O_RDONLY);
-	// test(fdc);
+	printf(MAIN_1("=== Le Petit Prince ===\n"));
+	int	fdc;
+	fdc = open("txt_files/t_ptiprinc.txt", O_RDONLY);
+	test(fdc);
 	
 	printf(MAIN("=== • Program ended • ===\n\n"));
 }
