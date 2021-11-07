@@ -52,26 +52,36 @@ int		main(void)
 	fdb = open("txt_files/t_n.txt", O_RDONLY);
 	test(fdb);
 
+	printf(MAIN_1("=== 43 NL ===\n"));
+	int	fdi;
+	fdi = open("txt_files/43_nl.txt", O_RDONLY);
+	test(fdi);
+
+	printf(MAIN_1("=== 43 WITH \n ===\n"));
+	int	fdj;
+	fdj = open("txt_files/43_wl.txt", O_RDONLY);
+	test(fdj);
+
 	printf(MAIN_1("=== Alternate line and nl ===\n"));
 	int	fde;
 	fde = open("txt_files/alt_ln.txt", O_RDONLY);
 	test(fde);
 
 
-	printf(MAIN_1("=== BIG LINE NO NL ===\n"));
-	int	fdg;
-	fdg = open("txt_files/bl_no.txt", O_RDONLY);
-	test(fdg);
+	// printf(MAIN_1("=== BIG LINE NO NL ===\n"));
+	// int	fdg;
+	// fdg = open("txt_files/bl_no.txt", O_RDONLY);
+	// test(fdg);
 
-	printf(MAIN_1("=== BIG LINE WITH NL ===\n"));
-	int	fdh;
-	fdh = open("txt_files/bl_wh.txt", O_RDONLY);
-	test(fdh);
+	// printf(MAIN_1("=== BIG LINE WITH NL ===\n"));
+	// int	fdh;
+	// fdh = open("txt_files/bl_wh.txt", O_RDONLY);
+	// test(fdh);
 
-	printf(MAIN_1("=== Le Petit Prince ===\n"));
-	int	fdc;
-	fdc = open("txt_files/t_ptiprinc.txt", O_RDONLY);
-	test(fdc);
+	// printf(MAIN_1("=== Le Petit Prince ===\n"));
+	// int	fdc;
+	// fdc = open("txt_files/t_ptiprinc.txt", O_RDONLY);
+	// test(fdc);
 	
 	printf(MAIN("=== • Program ended • ===\n\n"));
 }

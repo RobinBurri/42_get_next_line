@@ -46,17 +46,23 @@ static char	*ft_send_last_line(char *str, int ints[], int f)
 {
 	static int	i = 0;
 
+	if (ints[1] == 0 && (ft_strcmp(str, "") == 0))
+	{
+		f = 0;
+		free(str);
+	}
 	if (i == 1 || f == 0)
 	{
+
 		ints[0] = 1;
 		ints[1] = 1;
 		ints[2] = 1; 
-		str = ft_strdup("", 0);
-		if (f != 0)
-			free(str);
 		return (NULL);
 	}
 	i = 1;
+	ints[0] = 1;
+	ints[1] = 1;
+	ints[2] = 1; 
 	return (str);
 }
 
@@ -86,11 +92,8 @@ char	*get_next_line(int fd)
 	while (ints[1] > 0)
 	{
 		ints[1] = read(fd, buf, BUFFER_SIZE);
-		if (ints[1] == -1 || (ints[2]++ == 1 && ints[1] == 0)
-			|| (ints[1] == 0 && (ft_strcmp(str, "") == 0)))
-		{
+		if (ints[1] == -1 || (ints[2]++ == 1 && ints[1] == 0))
 			return (ft_send_last_line(str, ints, 0));
-		}
 		buf[ints[1]] = '\0';
 		str = ft_strjoin(str, buf);
 		if (ft_check_newline(str) != -1)
