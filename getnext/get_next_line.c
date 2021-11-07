@@ -46,14 +46,14 @@ static char	*ft_send_last_line(char *str, int ints[], int f)
 {
 	static int	i = 0;
 
-	if (ints[1] == 0 && (ft_strcmp(str, "") == 0))
+	if ((ints[1] == 0 && (ft_strcmp(str, "") == 0)) || ints[1] == -1
+		|| (ints[2]++ == 1 && ints[1] == 0))
 	{
 		f = 0;
 		free(str);
 	}
 	if (i == 1 || f == 0)
 	{
-
 		ints[0] = 1;
 		ints[1] = 1;
 		ints[2] = 1; 
