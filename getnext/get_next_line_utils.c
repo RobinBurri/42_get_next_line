@@ -6,13 +6,13 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:59:53 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/05 08:46:17 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/08 08:42:28 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_substr(char *s, unsigned int start, size_t len, int f) 
+char	*ft_substr(char *s, unsigned int start, size_t len, int f)
 {
 	char	*newstr;
 	size_t	max_len;

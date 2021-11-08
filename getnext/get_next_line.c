@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:17 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/05 10:10:08 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/08 08:43:38 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ static char	*ft_send_last_line(char *str, int ints[])
 	{
 		ints[0] = 1;
 		ints[1] = 1;
-		ints[2] = 1; 
+		ints[2] = 1;
 		i = 0;
 		return (NULL);
 	}
 	i = 1;
 	ints[0] = 1;
 	ints[1] = 1;
-	ints[2] = 1; 
+	ints[2] = 1;
 	return (str);
 }
 
@@ -75,9 +75,9 @@ static char	*ft_str_loader(char **str, int ints[])
 		ints[0] = 0;
 	}
 	else
-		{
+	{
 		*str = ft_strdup(*str, 1);
-		}
+	}
 	return (*str);
 }
 
