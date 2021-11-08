@@ -6,7 +6,7 @@
 /*   By: rburri <rburri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 08:13:17 by rburri            #+#    #+#             */
-/*   Updated: 2021/11/08 08:44:41 by rburri           ###   ########.fr       */
+/*   Updated: 2021/11/08 16:47:27 by rburri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,11 @@ static int	ft_check_newline(char *str)
 	return (-1);
 }
 
-static char	*ft_send_line(char **str)
+static char	*ft_send_line(char **str, int check)
 {
 	char		*line;
-	int			check;
 	int			len;
 
-	check = ft_check_newline(*str);
-	len = 0;
 	line = ft_substr(*str, 0, check + 1, 0);
 	len = (ft_strlen(*str) - ft_strlen(line));
 	*str = ft_substr(*str, check + 1, len, 1);
@@ -86,6 +83,7 @@ char	*get_next_line(int fd)
 	static char	*str;
 	char		buf[BUFFER_SIZE + 1];
 	static int	ints[] = {1, 1, 1};
+	int			check;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -97,10 +95,14 @@ char	*get_next_line(int fd)
 			return (ft_send_last_line(str, ints));
 		buf[ints[1]] = '\0';
 		str = ft_strjoin(str, buf);
-		if (ft_check_newline(str) != -1)
-			return (ft_send_line(&str));
+		if (ft_check_newline(buf) != -1)
+		{
+			check = ft_check_newline(str);
+			return (ft_send_line(&str, check));
+		}
 	}
-	if (ft_check_newline(str) != -1)
-		return (ft_send_line(&str));
+	check = ft_check_newline(str);
+	if (check != -1)
+		return (ft_send_line(&str, check));
 	return (ft_send_last_line(str, ints));
 }
